@@ -1,0 +1,185 @@
+#include <iostream>
+#include<stdlib.h>
+using namespace std;
+class holder 
+{
+    public :
+    string name;
+    long int an;
+    long int balance;
+    ~holder()
+    {
+        
+    }
+};
+long int n;
+holder h[10];
+void accountopen(int n)
+{
+    for(int i=1;i<=n;i++)
+    {
+        cout<<"enter account holder name of person "<<i<<endl;
+        cin>>h[i].name;
+        cout<<"your account number is "<<endl;
+        h[i].an=rand();
+        cout<<h[i].an<<endl;
+        cout<<"enter the ammount in your bank account of person  "<<i<<endl;
+        cin>>h[i].balance;
+        if(h[i].balance<1000)
+        {
+            cout<<"minimum ammount should be 1000"<<endl;
+            while(h[i].balance<1000)
+            {
+                cout<<"please submit the ammount atleast 1000 "<<endl;
+                cin>>h[i].balance;
+            }
+        }
+        
+    }
+    for(int i=1;i<=n;i++)
+    {
+        cout<<"account holder name   "<<h[i].name<<"\n\n";
+        cout<<"account number   "<<h[i].an<<"\n\n";
+        cout<<"account holder balance   "<<h[i].balance<<"\n\n";
+        
+    }
+}
+void accountclose()
+{
+    long int k;
+    cout<<"enter the account number which you want to delete"<<endl;
+    cin>>k;
+    for(int i=1;i<=n;i++)
+    {
+        if(h[i].an==k)
+        {
+            h[i].~holder();
+            cout<<"ACCOUNT IS DELETED"<<endl;
+        }
+        
+    }
+    
+    cout<<"there is no such account in this bank"<<endl;
+    
+}
+void transfer()
+{
+    int t,b,r;
+    int s,m;
+    cout<<"enter the ammount which you want to transfer  "<<endl;
+    cin>>t;
+    cout<<"enter the account number of remmitter"<<endl;
+    cin>>r;
+    cout<<"enter the benificiary account number "<<endl;
+    cin>>b;
+    for(int i=1;i<=n;i++)
+    {
+        if(h[i].an==r)
+        {
+            cout<<"remitter account details found"<<endl;
+            cout<<h[i].name<<endl;
+            cout<<h[i].balance<<endl;
+            s=i;
+        }
+       
+        
+        if(h[i].an==b)
+        {
+            cout<<"benificiary account details found"<<endl;
+             cout<<h[i].name<<endl;
+            cout<<h[i].balance<<endl;
+            m=i;
+        }
+        
+        
+    }
+    
+        if(h[m].an==b && h[s].an==r)
+        {
+            cout<<"both account is exist"<<endl;
+            if(h[s].balance>=t)
+            {
+                h[s].balance=h[s].balance-t;
+
+                h[m].balance=h[m].balance+t;
+                
+                cout<<"TRANSFER SUCCESSFULLY ☻ "<<endl;
+            }
+            else
+            {
+                cout<<"your balance is less than transfer money"<<endl;
+            }
+        }
+        else
+        {
+            cout<<"there is no account "<<endl;
+        }
+}
+void details()
+{
+    int l,flag=0;
+    cout<<"enter the account number"<<endl;
+    cin>>l;
+    for(int i=1;i<=n;i++)
+    {
+        if(h[i].an==l)
+        {
+            cout<<h[i].name<<"\n\n";
+            cout<<h[i].balance<<"\n\n";
+            cout<<h[i].an<<"\n\n";
+            flag=1;
+            break;
+        }
+    }
+    if(flag==0)
+    cout<<"There is no such account in bank "<<endl;
+    
+}
+
+
+
+int main()
+{
+    int opt;
+    
+    cout<<"\t\t\tWELCOME TO BANKING SYSTEM"<<"\n\n\n\n";
+    
+    
+    do
+    {
+        cout<<"want to open account then press 1"<<endl;
+        cout<<"want to close account then press 2"<<endl;
+        cout<<"want to transfer money then press 3"<<endl;
+        cout<<"want to check your account details then press 4"<<endl;
+        cout<<"want to exit press 5"<<endl;
+        cin>>opt;
+        switch(opt)
+        {
+            case 1 :
+            cout<<"how many person you want to open the account "<<endl;
+            cin>>n;
+            accountopen(n);
+            break;
+            case 2 :
+            accountclose();
+            break;
+            case 3 :
+            transfer();
+            break;
+            case 4 :
+            details();
+            break;
+            case 5 :
+            
+            break;
+            
+        }
+        
+        
+        
+    }while(opt!=5);
+    
+    
+
+    return 0;
+}
